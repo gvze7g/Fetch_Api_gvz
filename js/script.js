@@ -30,7 +30,7 @@ const tabla = document.querySelector('#tabla tbody')
                 <td>${persona.edad}</td>
                 <td>
                     <button>Editar</button>
-                    <button>Eliminar</button>
+                    <button onClick="EliminarPersona(${persona.id})">Eliminar</button>
                 </td>
             </tr>
             `
@@ -89,3 +89,17 @@ document.getElementById("frm-agregar").addEventListener("submit", async e => {
     }
 
 });
+
+//Función para borrar registros
+
+async function EliminarPersona(id){
+    const confirmacion = confirm("¿real quieres eliminar a la persona?");
+
+    //validamos si el usuario dijo que si desea borrar
+    if(confirmacion){
+        await fetch(`${API_URL}/${id}`, {method: "DELETE"});
+
+        //Recargamos la tabla para ver la eliminacion
+        obtenerPersonas();
+    }
+}
